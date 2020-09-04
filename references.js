@@ -3,50 +3,34 @@
 
 const mongoose = require('mongoose');
 const { getMaxListeners } = require('process');
-mongoose.connect('mongodb://localhost:27017/associations-demo-2', {
+mongoose.connect('mongodb://localhost:27017/associations-demo-3', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
   .then(() => console.log('Connected to DB!'))
   .catch(error => console.log(error.message));
 
-// ------------------SCHEMAS----------------------
-
-// POST SCHEMA AND MODEL
-const postSchema = new mongoose.Schema({
-  title: String,
-  content: String
-});
-const Post = mongoose.model("Post", postSchema);
-
+// SCHEMA AND MODEL IMPORTS
 // USER SCHEMA must be declared after POST SCHEMA, otherwise [postSchema] will return undefined.
+const Post = require("./models/post");
+const User = require("./models/user");
 
-// USER SCHEMA AND MODEL
-const userSchema = new mongoose.Schema({
-  email: String,
-  name: String,
-  posts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Post"
-  }] // ARRAY OF MONGOOSE OBJECT IDS (type) BELONGING TO A POST (ref).
-});
-const User = mongoose.model("User", userSchema);
 
-// CREATE AND SAVE NEW USER
+// // CREATE AND SAVE NEW USER
 // User.create({
 //   email: "bob@gmail.com",
 //   name: "bob"
 // });
 
-// CREATE AND SAVE NEW POST
+// // CREATE AND SAVE NEW POST
 // Post.create({
 //   title: "How to cook the best burger",
 //   content: "This is the recipe!"
 // });
 
-// CREATE AND SAVE NEW POST, PUSH POST ID TO USER
+//CREATE AND SAVE NEW POST, PUSH POST ID TO USER
 // Post.create({
-//   title: "How to cook the best burger part 4",
+//   title: "How to cook the best burger part 5",
 //   content: "This is the recipe mo yeah!!!!!!!!"
 // }, (err, post) => {
 //   if (err) {
